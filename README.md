@@ -21,7 +21,7 @@ DCAA-compliant timekeeping & cost accounting system
 See `CONTRIBUTING.md` for DCAA-specific commit & audit guidance.
 
 ## License
-MIT (or choose)PROPRIETARY AND CONFIDENTIAL
+This project is **proprietary and confidential**.
 
 Copyright (c) 2026 RYSON CONSULTING LLC. All rights reserved.
 
