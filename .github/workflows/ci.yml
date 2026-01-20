@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, 'feat/*', 'fix/*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install
+        run: npm install
+        working-directory: ./backend
+      - name: Build
+        run: npm run build
+        working-directory: ./backend
+      - name: Run tests
+        run: npm test -- --ci --reporter=jest-junit
+        working-directory: ./backend
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-results
+          path: backend/test-results || ./backend/junit.xml
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+        working-directory: ./frontend
+      - run: npm run build
+        working-directory: ./frontend
+      - run: npm test -- --watchAll=false
+        working-directory: ./frontend
